@@ -3,7 +3,7 @@
 EXEPATH="$0"
 EXE="$(basename "$EXEPATH")"
 
-_usage ( ) {
+_usage () {
   if [ "$1" "$2" "$3" ] ; then
     >&2 echo "usage: $EXE <cwd> $4"
     exit 2
@@ -12,16 +12,14 @@ _usage ( ) {
 
 _usage "$#" -lt 2 "<command> <...args>"
 
-CWD="$1"
-shift
-CMD="$1"
-shift
+CWD="$1" && shift
+CMD="$1" && shift
 
-_git ( ) {
+_git () {
   git -C "$CWD" "$@"
 }
 
-_route ( ) {
+_route () {
 
   case "$CMD" in
       init)
@@ -52,7 +50,7 @@ _route ( ) {
 
 }
 
-_init ( ) {
+_init () {
 
   _usage "$#" -ne 1 "init <remote>"
 
@@ -64,7 +62,7 @@ _init ( ) {
 
 }
 
-_PUT ( ) {
+_PUT () {
 
   path="$CWD/$1"
   mkdir -p "$(dirname "$path")"
@@ -73,7 +71,7 @@ _PUT ( ) {
 
 }
 
-_put ( ) {
+_put () {
 
   _usage "$#" -ne 2 "put <key> <value>"
 
@@ -86,7 +84,7 @@ _put ( ) {
 }
 
 
-_del ( ) {
+_del () {
 
   _usage "$#" -ne 1 "del <key>"
 
@@ -98,7 +96,7 @@ _del ( ) {
 
 }
 
-_get ( ) {
+_get () {
 
   _usage "$#" -ne 1 "get <key>"
 
@@ -114,7 +112,7 @@ _get ( ) {
 
 }
 
-_pull ( ) {
+_pull () {
 
   _usage "$#" -ne 0 "pull"
 
@@ -124,7 +122,7 @@ _pull ( ) {
 
 }
 
-_push ( ) {
+_push () {
 
   _usage "$#" -ne 0 "push"
 
@@ -134,7 +132,7 @@ _push ( ) {
 
 }
 
-_sync ( ) {
+_sync () {
 
   _usage "$#" -ne 0 "sync"
 
@@ -146,7 +144,7 @@ _sync ( ) {
 
 }
 
-_unknown_command ( ) {
+_unknown_command () {
   >&2 echo "Unknown command: $1"
   exit 3
 }
